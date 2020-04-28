@@ -1,0 +1,32 @@
+{% load navbar permission %}
+
+<ul id="navbar-items">
+  {% for item in items %}
+  <li {% if item.expand %}class="expand expand-default" {% endif %}>
+    {% if item.has_children %}
+    <a href="#" class="has-children{% if item.active %} active{% endif %}">
+      {% else %}
+      <a href="{{ item.url }}" class="{% if item.active %} active{% endif %}">
+        {% endif %}
+        {% if item.icon %}
+        <i class="{{ item.icon }} fa-fw"></i>
+        {% endif %}
+        {{ item.name }}
+      </a>
+      {% if item.has_children %}
+      <i class="fas fa-chevron-right"></i>
+      <ul>
+        {% for subitem in item.children %}
+          {% if user|has_perm:subitem.permission %}
+          <li>
+            <a href="{{ subitem.url }}" {% if subitem.active %}class="active" {% endif %}>
+              {{ subitem.name }}
+            </a>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+  </li>
+  {% endfor %}
+</ul>

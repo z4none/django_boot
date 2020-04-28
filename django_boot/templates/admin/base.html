@@ -1,0 +1,158 @@
+{% load i18n static cache bootstrap4 navbar %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+  <!-- <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}"> -->
+  <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/fontawesome.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/regular.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "fontawesome/css/solid.min.css" %}">
+  <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
+  {% block extrastyle %}{% endblock %}
+
+  <script src="{% static "js/jquery.min.js" %}"></script>
+  {% block extrahead %}{% endblock %}
+  {% block responsive %}
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  {% endblock %}
+  {% block blockbots %}
+  <meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+{% load i18n %}
+
+<body id="layout" class="{% if is_popup %}popup {% endif %}{% block bodyclass %}{% endblock %}"
+  data-admin-utc-offset="{% now "Z" %}">
+
+  {% if not is_popup %}
+  {% block navbar %}
+  <div id="navbar">
+    <div class="brand">
+      <a href="{% url 'admin:index' %}">
+        <i class="far fa-star"></i>
+        DjangoBoot
+      </a>
+    </div>
+    <div class="separator">
+    </div>
+    {% navbar_items %}
+  </div>
+  {% endblock %}
+  {% endif %}
+
+  <!-- Container -->
+  <div id="container">
+
+    {% if not is_popup %}
+    <!-- Header -->
+    <div id="header">
+      {% block usertools %}
+      {% if has_permission %}
+      <div class="user-info float-right">
+        <span class="dropdown">
+          <a href="#" class="item dropdown-toggle" style="text-transform:uppercase;" data-toggle="dropdown">
+            {% firstof user.get_short_name user.get_username %}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            {% comment %} <a class="dropdown-item" href="{% url 'system:profile' %}">
+              用户信息
+            </a> {% endcomment %}
+            {% if user.has_usable_password %}
+            <a class="dropdown-item" href="{% url 'admin:password_change' %}">
+              修改密码
+            </a>
+            {% endif %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'admin:logout' %}" class="item">
+              注销
+            </a>
+          </div>
+        </span>
+      </div>
+      {% endif %}
+      {% endblock %}
+      {% block nav-global %}{% endblock %}
+    </div>
+    <!-- END Header -->
+    {% endif %}
+
+    <div class="page-header mb-3">
+      {% if not is_popup %}
+      {% block breadcrumbs %}
+      <div class="breadcrumbs">
+        <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+        {% if title %} &rsaquo; {{ title }}{% endif %}
+      </div>
+      {% endblock %}
+      {% endif %}
+
+      {% if title %}
+      <div class="title">
+        {{ title }}
+      </div>
+      {% endif %}
+
+      <div class="extra">
+        {% block page_header_extra %}
+        {% endblock %}
+      </div>
+    </div>
+
+    {% block messages %}
+    {% if messages %}
+    <div class="message-box">
+      {% bootstrap_messages %}
+    </div>
+    {% endif %}
+    {% endblock messages %}
+
+    <!-- Content -->
+    <div id="content">
+      {% block pretitle %}{% endblock %}
+      {% block content %}
+      {% block object-tools %}{% endblock %}
+      {{ content }}
+      {% endblock %}
+      {% block sidebar %}{% endblock %}
+      <br class="clear">
+    </div>
+    <!-- END Content -->
+
+    {% block footer %}<div id="footer"></div>{% endblock %}
+  </div>
+  <!-- END Container -->
+{#  <script >#}
+{#    if (window.django && window.django.jQuery) {#}
+{#        window.$ = window.django.jQuery;#}
+{#        window.jQuery = window.django.jQuery;#}
+{##}
+{#    } else {#}
+{#      document.write('<script src="{% static "js/jquery.min.js" %}">\x3C/script>')#}
+{#    }#}
+{#  </script>#}
+  <script src="{% static "js/utils.js" %}"></script>
+  <script src="{% static "js/popper.min.js" %}"></script>
+  <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+  <script>
+    $(function () {
+      $("#navbar-items a.has-children").click(function () {
+        var li = $(this).parent();
+        var ul = li.find("ul");
+        if (li.hasClass("expand")) {
+          li.removeClass("expand");
+          ul.slideUp(200);
+        } else {
+          $("#navbar-items").find("li.expand").removeClass("expand").find("ul").slideUp(200);
+          li.addClass("expand");
+          ul.slideDown(200);
+        }
+        return false;
+      })
+    })
+  </script>
+  {% block extrascript %}{% endblock %}
+</body>
+
+</html>

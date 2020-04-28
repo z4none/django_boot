@@ -1,0 +1,96 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static admin_list %}
+
+
+{% block extrascript %}
+{{ block.super }}
+<script>
+  $(function () {
+    $('#result_list .field-indented_title a').click(function (e) {
+      e.preventDefault();
+    })
+
+    var params = getQueryParams(location.href)
+    $('#result_list tbody tr').each(function () {
+      var org = $(this).find('.tree-node').data('pk');
+      if (params.org == org) {
+        $(this).addClass('active');
+      }
+    }).click(function () {
+      var org = $(this).find('.tree-node').data('pk');
+      if (params.org != org) {
+        location.href = setUrlParams(location.href, { org: org });
+      }
+    })
+  })
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div class="row">
+    <div class="col">
+      <div class="card module" id="changelist">
+        <div class="card-header">
+          组织
+        </div>
+        <div class="card-body p-0">
+          <div id="changelist-content">
+            <form id="changelist-result" method="post" {% if cl.formset and cl.formset.is_multipart %}
+              enctype="multipart/form-data" {% endif %} novalidate style="margin: -1.5rem 0;">{% csrf_token %}
+              {% if cl.formset %}
+              <div>{{ cl.formset.management_form }}</div>
+              {% endif %}
+              {% block result_list %}
+              {% if action_form and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+              {% result_list cl %}
+              {% endblock %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" id="changelis">
+        <div class="card-header">
+          用户
+        </div>
+        <div class="card-body p-0">
+          {% if users %}
+          <table id="result_list" class="table mb-0">
+            <thead>
+              <th>用户名</th>
+              <th>名称</th>
+              <th>组织</th>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <td>
+                  {{ user.username }}
+                </td>
+                <td>
+                  {{ user.first_name }}
+                </td>
+                <td>
+                  {{ user.orgs }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="p-4 mb-0">
+            {% if users is None %}
+            请选择组织
+            {% else %}
+            无数据
+            {% endif %}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+  {% endblock %}

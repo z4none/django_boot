@@ -1,0 +1,112 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+  &rsaquo; {{ opts.verbose_name_plural|capfirst }}
+</div>
+{% endblock %}
+
+
+{% block extrascript %}
+{{ block.super }}
+<script>
+  $(function () {
+    $('.dict-row').click(function () {
+      var dt = $(this).data('dt');
+      location.href = setUrlParams(location.href, { dt: dt });
+    })
+  })
+</script>
+{% endblock %}
+
+{% block page_header_extra %}
+{% if has_add_permission %}
+
+<a href="{%  url opts|admin_urlname:'add' %}?parent={{dt}}" class="btn btn-secondary" role="button">
+  增加 字典
+</a>
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<div id="content-main">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">字典</div>
+        <div class="card-body p-0">
+          <table id="result_list" class="table mb-0">
+            <thead>
+              <th>名称</th>
+              <th>编码</th>
+              <th class="text-right">操作</th>
+            </thead>
+            <tbody>
+              {% for dict in dict_list %}
+              <tr class="dict-row {% if dt == dict.id %} active{% endif %}" data-dt="{{dict.id}}">
+                <td>
+                  {{ dict.name }}
+                </td>
+                <td>
+                  {{ dict.value }}
+                </td>
+                <td class="text-right">
+                  <a href="{% url 'admin:djboot_dict_change' dict.id %}">详情</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-header">{% if dict_obj %} {{ dict_obj.name }} {% else %} 数据 {% endif %}</div>
+        <div class="card-body p-0">
+          {% if item_list %}
+          <table class="table mb-0">
+            <thead>
+              <th>名称</th>
+              <th>值</th>
+              <th>顺序</th>
+              <th class="text-right">操作</th>
+            </thead>
+            <tbody>
+              {% for item in item_list %}
+              <tr>
+                <td>
+                  {{ item.name }}
+                </td>
+                <td>
+                  {{ item.value }}
+                </td>
+                <td>
+                  {{ item.order }}
+                </td>
+                <td class="text-right">
+                  <a href="{% url 'admin:djboot_dict_change' item.id %}">详情</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="p-4 mb-0">
+            {% if item_list is None %}
+            请选择字典
+            {% else %}
+            无数据
+            {% endif %}
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
