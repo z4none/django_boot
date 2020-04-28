@@ -1,4 +1,4 @@
-{% load navbar permission %}
+{% load django_boot fontawesome_5 %}
 
 <ul id="navbar-items">
   {% for item in items %}
@@ -9,7 +9,7 @@
       <a href="{{ item.url }}" class="{% if item.active %} active{% endif %}">
         {% endif %}
         {% if item.icon %}
-        <i class="{{ item.icon }} fa-fw"></i>
+        {% fa5_icon item.icon.name class='fa-fw' %}
         {% endif %}
         {{ item.name }}
       </a>

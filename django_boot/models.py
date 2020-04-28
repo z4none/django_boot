@@ -1,7 +1,10 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User, Permission
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from fontawesome_5.fields import IconField
 from mptt.models import MPTTModel, TreeForeignKey
 
 
@@ -72,7 +75,7 @@ class SidebarItem(models.Model):
                                null=True,
                                blank=True,
                                related_name='children')
-    icon = models.CharField('图标', max_length=50, blank=True)
+    icon = IconField()
     permission = models.ForeignKey(Permission, on_delete=models.SET_NULL, verbose_name='权限', null=True, blank=True, )
 
     class Meta:
@@ -137,4 +140,17 @@ class Org(MPTTModel):
 
     def __str__(self):
         return f'组织: {self.name}'
+
+
+class Notification(models.Model):
+    class Meta:
+        verbose_name = "notification"
+
+    title = models.CharField('title', max_length=200)
+    content = models.TextField('content')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    create_tm = models.DateTimeField('created time', default=datetime.datetime.now)
+    readed = models.BooleanField('readed', default=False)
+    read_tm = models.DateTimeField('read time', null=True)
+
 

@@ -38,3 +38,20 @@ def navbar_items(context):
     items = SidebarItem.objects.filter(parent=None).all().order_by('order')
     context['items'] = list(map(process_item, items))
     return context
+
+
+@register.filter()
+def has_perm(user, permission):
+    if permission:
+        return user.has_perm(permission)
+    return True
+
+
+@register.filter()
+def has_perms(user, *permission):
+    return user.has_perms(*permission)
+
+
+@register.filter()
+def unread_notification(user):
+    return user.notifications.filter(readed=False).count()

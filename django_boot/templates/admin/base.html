@@ -1,4 +1,4 @@
-{% load i18n static cache bootstrap4 navbar %}
+{% load i18n static cache admin_urls bootstrap4 fontawesome_5 django_boot %}
 <!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
 <html lang="{{ LANGUAGE_CODE|default:"en-us" }}" {% if LANGUAGE_BIDI %}dir="rtl" {% endif %}>
@@ -51,22 +51,30 @@
       {% block usertools %}
       {% if has_permission %}
       <div class="user-info float-right">
+        <a href="{% url 'admin:dbt_notification_changelist' %}" class="item">
+          {% fa5_icon 'bell' %}
+          {% with unread=user|unread_notification %}
+            {% if unread %}
+              <span class="badge badge-primary">{{ unread }}</span>
+            {% endif %}
+          {% endwith %}
+        </a>
         <span class="dropdown">
           <a href="#" class="item dropdown-toggle" style="text-transform:uppercase;" data-toggle="dropdown">
             {% firstof user.get_short_name user.get_username %}
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            {% comment %} <a class="dropdown-item" href="{% url 'system:profile' %}">
+            {% comment %} <a class="dropdown-item" href="{% url 'dbt:profile' %}">
               用户信息
             </a> {% endcomment %}
             {% if user.has_usable_password %}
             <a class="dropdown-item" href="{% url 'admin:password_change' %}">
-              修改密码
+              change password
             </a>
             {% endif %}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'admin:logout' %}" class="item">
-              注销
+              logout
             </a>
           </div>
         </span>

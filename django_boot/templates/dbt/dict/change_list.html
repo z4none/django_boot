@@ -55,7 +55,7 @@
                   {{ dict.value }}
                 </td>
                 <td class="text-right">
-                  <a href="{% url 'admin:djboot_dict_change' dict.id %}">详情</a>
+                  <a href="{% url 'admin:dbt_dict_change' dict.id %}">详情</a>
                 </td>
               </tr>
               {% endfor %}
@@ -89,7 +89,7 @@
                   {{ item.order }}
                 </td>
                 <td class="text-right">
-                  <a href="{% url 'admin:djboot_dict_change' item.id %}">详情</a>
+                  <a href="{% url 'admin:dbt_dict_change' item.id %}">详情</a>
                 </td>
               </tr>
               {% endfor %}

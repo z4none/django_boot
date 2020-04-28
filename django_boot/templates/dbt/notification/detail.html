@@ -1,0 +1,32 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block breadcrumbs %}
+  <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; <a
+      href="{% url 'admin:dbt_notification_changelist' %}">Notification</a>
+  </div>
+{% endblock %}
+
+{% block page_header_extra %}
+  <a href="{% url 'admin:dbt_notification_changelist' %}" class="btn btn-secondary">
+    back notifications
+  </a>
+  {% if not obj.readed %}
+  <a href="{% url 'admin:notification-mark-as-readed' obj.id %}" class="btn btn-secondary">
+    mark as readed
+  </a>
+  {% endif %}
+  <a href="" class="btn btn-danger">
+    delete
+  </a>
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      {{ obj.content }}
+    </div>
+  </div>
+{% endblock %}

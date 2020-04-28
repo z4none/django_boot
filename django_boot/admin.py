@@ -11,7 +11,7 @@ from django.template.response import TemplateResponse
 from django.core.exceptions import PermissionDenied
 from django_select2 import forms as s2forms
 from mptt.admin import DraggableMPTTAdmin
-from .models import Foo, Profile, SidebarItem, Config, Dict, Org
+from .models import Foo, Profile, SidebarItem, Config, Dict, Org, Notification
 from .site import AdminSite
 
 
@@ -93,7 +93,7 @@ class DictForm(ModelForm):
 
 class DictAdmin(admin.ModelAdmin):
     list_per_page = 20
-    change_list_template = 'system/dict/change_list.html'
+    change_list_template = 'dbt/dict/change_list.html'
     form = DictForm
 
     def changelist_view(self, request, extra_context=None):
@@ -136,7 +136,7 @@ class DictAdmin(admin.ModelAdmin):
 class OrgAdmin(DraggableMPTTAdmin):
     list_display = ('tree_actions', 'indented_title', 'row_actions')
     # list_display_links = None
-    change_list_template = 'system/org/change_list.html'
+    change_list_template = 'dbt/org/change_list.html'
 
     def get_actions(self, request):
         actions = super().get_actions(request)
@@ -145,7 +145,7 @@ class OrgAdmin(DraggableMPTTAdmin):
         return actions
 
     def row_actions(self, obj):
-        url = reverse('djboot_org_change', args=(obj.id,))
+        url = reverse('admin:dbt_org_change', args=(obj.id,))
         return mark_safe(f'<a href="{url}" class="float-right">编辑</a>')
 
     # tree_actions.short_description = ''
@@ -179,6 +179,39 @@ class OrgAdmin(DraggableMPTTAdmin):
         return super(OrgAdmin, self).changelist_view(request, extra_context=extra_context)
 
 
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('notification_title', 'create_tm', 'readed')
+    list_display_links = None
+    list_filter = ('readed',)
+    exclude = ('user', 'create_tm', 'readed', 'read_tm')
+    actions = ('make_readed', )
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['title'] = 'view notifications'
+        return super(NotificationAdmin, self).changelist_view(request, extra_context=extra_context)
+
+    def has_add_permission(self, request):
+        return False
+
+    def make_readed(self, request, queryset):
+        rows_updated = queryset.update(readed=True)
+        if rows_updated == 1:
+            message_bit = "1 notification was"
+        else:
+            message_bit = "%s notifications were" % rows_updated
+        self.message_user(request, "%s successfully marked as readed." % message_bit)
+
+    make_readed.short_description = "Mark selected notification as readed"
+
+    def notification_title(self, obj):
+        url = reverse('admin:notification-detail', args=(obj.id,))
+        return mark_safe(f'<a href="{url}">{obj.title}</a>')
+
+    # tree_actions.short_description = ''
+    notification_title.short_description = mark_safe('<span>title</span>')
+
+
 admin_site = AdminSite(name='django_boot')
 
 admin_site.register(Foo)
@@ -190,3 +223,4 @@ admin_site.register(LogEntry, LogEntryAdmin)
 admin_site.register(Config, ConfigAdmin)
 admin_site.register(Dict, DictAdmin)
 admin_site.register(Org, OrgAdmin)
+admin_site.register(Notification, NotificationAdmin)
