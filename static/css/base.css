@@ -392,8 +392,12 @@ fieldset h2 {
 }
 #result_list td.action-checkbox,
 #result_list th.action-checkbox-column {
-  width: 50px;
+  width: 40px;
   text-align: center;
+}
+#result_list td.action-checkbox input,
+#result_list th.action-checkbox-column input {
+  vertical-align: middle;
 }
 #result_list tr.active {
   background: #ffffcc;
@@ -497,51 +501,51 @@ fieldset h2 {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   margin: -1px 12px 12px;
 }
-#navbar #navbar-items {
+#navbar #navbar-menu {
   list-style: none;
   margin: 0;
   padding: 2px 0 0 0;
 }
-#navbar #navbar-items li {
+#navbar #navbar-menu li {
   position: relative;
 }
-#navbar #navbar-items li.expand {
+#navbar #navbar-menu li.expand {
   background: rgba(255, 255, 255, 0.15);
 }
-#navbar #navbar-items li.expand i.fa-chevron-right {
+#navbar #navbar-menu li.expand i.fa-chevron-right {
   transform: rotate(90deg);
 }
-#navbar #navbar-items li.expand-default ul {
+#navbar #navbar-menu li.expand-default ul {
   display: block;
 }
-#navbar #navbar-items li a {
+#navbar #navbar-menu li a {
   display: block;
   padding: 1rem 2rem;
   color: rgba(255, 255, 255, 0.8);
 }
-#navbar #navbar-items li a:hover {
+#navbar #navbar-menu li a:hover {
   color: #ffffff;
 }
-#navbar #navbar-items li a i {
+#navbar #navbar-menu li a i {
   margin-right: 0.8rem;
 }
-#navbar #navbar-items li a.active {
+#navbar #navbar-menu li a.active {
   color: #ffffff;
   background: #0077ff;
 }
-#navbar #navbar-items li i.fa-chevron-right {
+#navbar #navbar-menu li i.fa-chevron-right {
   position: absolute;
   right: 1rem;
   top: 1.5rem;
   transition: all 0.2s;
 }
-#navbar #navbar-items li ul {
+#navbar #navbar-menu li ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: none;
 }
-#navbar #navbar-items li ul a {
+#navbar #navbar-menu li ul a {
   padding: 1rem 2rem 1rem 4rem;
 }
 #container {
@@ -556,24 +560,28 @@ fieldset h2 {
 #header {
   height: 50px;
   display: block;
-  padding: 0 8px;
+  padding: 0 0.6rem;
   background: #ffffff;
   color: #000000;
   border-bottom: solid 1px #dddddd;
   overflow: visible;
 }
+#header .user-info {
+  text-align: left;
+  height: 100%;
+}
+#header .user-info .item {
+  display: inline-block;
+  height: 100%;
+  padding: 1.5rem 1rem;
+}
+#header .user-info .item:hover {
+  background: #EEEEEE;
+}
 #header a:link,
 #header a:visited {
   color: #333333;
   text-decoration: none;
-}
-#header .user-info {
-  text-align: left;
-  margin-top: 12px;
-}
-#header .user-info .item {
-  display: inline-block;
-  padding: 0.2rem;
 }
 #container .breadcrumbs a {
   color: #333333;
@@ -625,5 +633,25 @@ fieldset h2 {
 #changelist-content #changelist-filter ul {
   list-style: none;
   padding-left: 1rem;
+}
+.d-fa-select {
+  padding: 0;
+}
+.d-fa-select .d-fa-input {
+  border: none;
+  height: 100%;
+}
+.d-fa-select .d-fa-dropdown {
+  left: -1px;
+  width: 100% !important;
+}
+.alert-dismissible .close {
+  padding: 0.55rem 1.25rem;
+}
+.select2-container--admin-autocomplete .select2-selection--single {
+  border-radius: 0 !important;
+}
+.select2-dropdown {
+  border-radius: 0 !important;
 }
 /*# sourceMappingURL=base.css.map */

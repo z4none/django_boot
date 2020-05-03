@@ -1,0 +1,11 @@
+{% load django_boot fontawesome_5 %}
+
+{% for item in user_menu %}
+  {% if item.is_divider %}
+    <div class="dropdown-divider"></div>
+  {% else %}
+    <a class="dropdown-item" href="{{ item.url }}">
+      {{ item.name }}
+    </a>
+  {% endif %}
+{% endfor %}

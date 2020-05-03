@@ -11,7 +11,7 @@ from django.template.response import TemplateResponse
 from django.core.exceptions import PermissionDenied
 from django_select2 import forms as s2forms
 from mptt.admin import DraggableMPTTAdmin
-from .models import Foo, Profile, SidebarItem, Config, Dict, Org, Notification
+from .models import Foo, Profile, Config, Dict, Org, Notification
 from .site import AdminSite
 
 
@@ -36,21 +36,6 @@ class PermissionAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
-
-
-class SidebarItemForm(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(SidebarItemForm, self).__init__(*args, **kwargs)
-        self.fields['parent'].queryset = SidebarItem.objects.filter(
-            parent=None)
-
-
-class SidebarItemAdmin(admin.ModelAdmin):
-    list_display = ('name', 'url', 'permission', 'parent', 'order')
-    search_fields = ['name']
-    ordering = ('parent', 'order')
-    autocomplete_fields = ('permission',)
-    form = SidebarItemForm
 
 
 class LogEntryAdmin(admin.ModelAdmin):
@@ -145,7 +130,7 @@ class OrgAdmin(DraggableMPTTAdmin):
         return actions
 
     def row_actions(self, obj):
-        url = reverse('admin:dbt_org_change', args=(obj.id,))
+        url = reverse('admin:db_org_change', args=(obj.id,))
         return mark_safe(f'<a href="{url}" class="float-right">编辑</a>')
 
     # tree_actions.short_description = ''
@@ -218,7 +203,6 @@ admin_site.register(Foo)
 admin_site.register(User, UserAdmin)
 admin_site.register(Group)
 admin_site.register(Permission, PermissionAdmin)
-admin_site.register(SidebarItem, SidebarItemAdmin)
 admin_site.register(LogEntry, LogEntryAdmin)
 admin_site.register(Config, ConfigAdmin)
 admin_site.register(Dict, DictAdmin)

@@ -63,29 +63,6 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
-class SidebarItem(models.Model):
-    """Model definition for SidebarItem."""
-    name = models.CharField('名称', max_length=50)
-    url = models.CharField('网址', max_length=100, null=True, blank=True)
-    pattern = models.CharField(
-        '高亮模式', max_length=50, null=True, blank=True, help_text='匹配当前 url 决定是否高亮')
-    order = models.IntegerField('顺序', default=0)
-    parent = models.ForeignKey('self', verbose_name='上级菜单',
-                               on_delete=models.SET_NULL,
-                               null=True,
-                               blank=True,
-                               related_name='children')
-    icon = IconField()
-    permission = models.ForeignKey(Permission, on_delete=models.SET_NULL, verbose_name='权限', null=True, blank=True, )
-
-    class Meta:
-        verbose_name = '侧栏菜单'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return f'侧栏菜单: {self.name}'
-
-
 class Config(models.Model):
     name = models.CharField('名称', max_length=200, unique=True)
     value = models.TextField('值', max_length=200, blank=True)

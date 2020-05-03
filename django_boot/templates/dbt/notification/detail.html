@@ -5,12 +5,12 @@
   <div class="breadcrumbs">
     <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
     &rsaquo; <a
-      href="{% url 'admin:dbt_notification_changelist' %}">Notification</a>
+      href="{% url 'admin:db_notification_changelist' %}">Notification</a>
   </div>
 {% endblock %}
 
 {% block page_header_extra %}
-  <a href="{% url 'admin:dbt_notification_changelist' %}" class="btn btn-secondary">
+  <a href="{% url 'admin:db_notification_changelist' %}" class="btn btn-secondary">
     back notifications
   </a>
   {% if not obj.readed %}

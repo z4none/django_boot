@@ -37,7 +37,7 @@
     </div>
     <div class="separator">
     </div>
-    {% navbar_items %}
+    {% navbar_menu %}
   </div>
   {% endblock %}
   {% endif %}
@@ -51,7 +51,7 @@
       {% block usertools %}
       {% if has_permission %}
       <div class="user-info float-right">
-        <a href="{% url 'admin:dbt_notification_changelist' %}" class="item">
+        <a href="{% url 'admin:db_notification_changelist' %}" class="item">
           {% fa5_icon 'bell' %}
           {% with unread=user|unread_notification %}
             {% if unread %}
@@ -64,18 +64,7 @@
             {% firstof user.get_short_name user.get_username %}
           </a>
           <div class="dropdown-menu dropdown-menu-right">
-            {% comment %} <a class="dropdown-item" href="{% url 'dbt:profile' %}">
-              用户信息
-            </a> {% endcomment %}
-            {% if user.has_usable_password %}
-            <a class="dropdown-item" href="{% url 'admin:password_change' %}">
-              change password
-            </a>
-            {% endif %}
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'admin:logout' %}" class="item">
-              logout
-            </a>
+            {% user_menu %}
           </div>
         </span>
       </div>
@@ -145,14 +134,14 @@
   <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
   <script>
     $(function () {
-      $("#navbar-items a.has-children").click(function () {
+      $("#navbar-menu a.has-children").click(function () {
         var li = $(this).parent();
         var ul = li.find("ul");
         if (li.hasClass("expand")) {
           li.removeClass("expand");
           ul.slideUp(200);
         } else {
-          $("#navbar-items").find("li.expand").removeClass("expand").find("ul").slideUp(200);
+          $("#navbar-menu").find("li.expand").removeClass("expand").find("ul").slideUp(200);
           li.addClass("expand");
           ul.slideDown(200);
         }

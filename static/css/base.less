@@ -446,8 +446,11 @@ fieldset {
   }
 
   td.action-checkbox, th.action-checkbox-column {
-    width: 50px;
+    width: 40px;
     text-align: center;
+    input {
+      vertical-align: middle;
+    }
   }
 
   tr.active {
@@ -575,7 +578,7 @@ fieldset {
     margin: -1px 12px 12px;
   }
 
-  #navbar-items {
+  #navbar-menu {
     list-style: none;
     margin: 0;
     padding: 2px 0 0 0;
@@ -653,11 +656,26 @@ fieldset {
 #header {
   height: 50px;
   display: block;
-  padding: 0 8px;
+  padding: 0 .6rem;
   background: #ffffff;
   color: #000000;
   border-bottom: solid 1px #dddddd;
   overflow: visible;
+
+  .user-info {
+    text-align: left;
+    height: 100%;
+
+    .item {
+      display: inline-block;
+      height: 100%;
+      padding: 1.5rem 1rem;
+
+      &:hover {
+        background: #EEEEEE;
+      }
+    }
+  }
 }
 
 #header a:link, #header a:visited {
@@ -665,15 +683,7 @@ fieldset {
   text-decoration: none;
 }
 
-#header .user-info {
-  text-align: left;
-  margin-top: 12px;
-}
 
-#header .user-info .item {
-  display: inline-block;
-  padding: .2rem;
-}
 
 #container .breadcrumbs a {
   color: #333333;
@@ -743,4 +753,32 @@ fieldset {
       padding-left: 1rem;
     }
   }
+}
+
+.d-fa-select {
+  padding: 0;
+
+  .d-fa-input {
+    border: none;
+    height: 100%;
+  }
+
+  .d-fa-dropdown {
+    left: -1px;
+    width: 100% !important;
+  }
+}
+
+.alert-dismissible {
+  .close {
+    padding: .55rem 1.25rem;
+  }
+}
+
+.select2-container--admin-autocomplete .select2-selection--single {
+  border-radius: 0 !important;
+}
+
+.select2-dropdown {
+  border-radius: 0 !important;
 }

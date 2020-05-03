@@ -1,0 +1,32 @@
+{% load django_boot fontawesome_5 %}
+
+<ul id="navbar-menu">
+  {% for item in navbar_menu %}
+  <li {% if item.expand %}class="expand expand-default" {% endif %}>
+    {% if item.has_children %}
+    <a href="#" class="has-children{% if item.active %} active{% endif %}">
+      {% else %}
+      <a href="{{ item.url }}" class="{% if item.active %} active{% endif %}">
+        {% endif %}
+        {% if item.icon %}
+        {% fa5_icon item.icon class='fa-fw' %}
+        {% endif %}
+        {{ item.name }}
+      </a>
+      {% if item.has_children %}
+      <i class="fas fa-chevron-right"></i>
+      <ul>
+        {% for sub_item in item.children %}
+          {% if user|has_perm:sub_item.permission %}
+          <li>
+            <a href="{{ sub_item.url }}" {% if sub_item.active %}class="active" {% endif %}>
+              {{ sub_item.name }}
+            </a>
+          </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      {% endif %}
+  </li>
+  {% endfor %}
+</ul>

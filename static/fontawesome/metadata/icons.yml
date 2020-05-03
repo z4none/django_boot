@@ -632,7 +632,7 @@ apple:
       - fruit
       - ios
       - mac
-      - operating system
+      - operating dbt
       - os
       - osx
   styles:
@@ -3266,7 +3266,7 @@ centos:
   search:
     terms:
       - linux
-      - operating system
+      - operating dbt
       - os
   styles:
     - brands
@@ -6877,7 +6877,7 @@ fedora:
   search:
     terms:
       - linux
-      - operating system
+      - operating dbt
       - os
   styles:
     - brands
@@ -15222,7 +15222,7 @@ redhat:
   search:
     terms:
       - linux
-      - operating system
+      - operating dbt
       - os
   styles:
     - brands
@@ -18104,7 +18104,7 @@ suse:
   search:
     terms:
       - linux
-      - operating system
+      - operating dbt
       - os
   styles:
     - brands
@@ -19577,7 +19577,7 @@ ubuntu:
   search:
     terms:
       - linux
-      - operating system
+      - operating dbt
       - os
   styles:
     - brands
@@ -21081,7 +21081,7 @@ windows:
   search:
     terms:
       - microsoft
-      - operating system
+      - operating dbt
       - os
   styles:
     - brands
