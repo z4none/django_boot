@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'bootstrap4',
-    'fontawesome_5',  # https://github.com/BenjjinF/django-fontawesome-5
+    'fontawesome_5',
     'mptt',
 ]
 

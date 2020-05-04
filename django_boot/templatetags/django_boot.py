@@ -48,6 +48,7 @@ def user_menu(context):
     }, settings.DB_USER_MENU)
     return context
 
+
 @register.filter()
 def has_perm(user, permission):
     if permission:

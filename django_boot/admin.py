@@ -4,6 +4,7 @@ from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User, Group, Permission
 from django.forms import ModelForm, TextInput
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.html import format_html, mark_safe
 from django.core.paginator import Paginator
@@ -116,6 +117,18 @@ class DictAdmin(admin.ModelAdmin):
         }
 
         return TemplateResponse(request, self.change_list_template, context)
+
+    def response_add(self, request, obj):
+        url = reverse("admin:db_dict_changelist")
+        if obj.parent:
+            url = f'{url}?dt={obj.parent.id}'
+        else:
+            url = f'{url}?dt={obj.id}'
+
+        return HttpResponseRedirect(url)
+
+    def response_change(self, request, obj):
+        return self.response_add(request, obj)
 
 
 class OrgAdmin(DraggableMPTTAdmin):

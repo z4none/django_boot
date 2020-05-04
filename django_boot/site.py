@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from .utils import notify
+from .utils import get_dict, notify
 
 
 class AdminSite(admin.AdminSite):
@@ -21,8 +21,9 @@ class AdminSite(admin.AdminSite):
         return context
 
     def test(self, request):
-        # request.current_app = self.name
-        return render(request, "test.html", self.each_context(request))
+        context = self.each_context(request)
+        context['items'] = get_dict('android_mobile_mfr')
+        return render(request, "test.html", context)
 
     def test_notification(self, request):
         notify(request.user, 'test notification', f'this is a test notification')

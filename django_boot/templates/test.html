@@ -1,6 +1,27 @@
 {% extends "admin/base_site.html" %}
+
 {% block content %}
-  <form action="/test-notification">
-    <button class="btn btn-secondary">test notification</button>
-  </form>
+  <div class="card mb-3">
+    <div class="card-header">
+      测试通知
+    </div>
+    <div class="card-body">
+      <form action="/test-notification">
+        <button class="btn btn-secondary">新增一条通知</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      测试字典
+    </div>
+    <div class="card-body">
+      <select>
+        {% for item in items %}
+          <option value="item.value">{{ item.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
 {% endblock %}
