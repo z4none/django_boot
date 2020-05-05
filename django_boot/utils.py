@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import Dict, Config, Notification
 
 
@@ -6,8 +8,10 @@ def notify(user, title, content):
 
 
 def get_dict(value):
-	d = Dict.objects.get(value=value)
-	return d.items.all() if d else []
+	try:
+		return Dict.objects.get(value=value).items.all()
+	except Dict.DoesNotExist:
+		return []
 
 
 def get_config(name, default_value):

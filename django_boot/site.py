@@ -7,19 +7,6 @@ from .utils import get_dict, notify
 
 
 class AdminSite(admin.AdminSite):
-    site_header = 'my site header'
-
-    def get_context(self, request):
-        app_list = self.get_app_list(request)
-
-        context = {
-            **self.each_context(request),
-            'title': self.index_title,
-            'app_list': self.get_app_list(request),
-        }
-
-        return context
-
     def test(self, request):
         context = self.each_context(request)
         context['items'] = get_dict('android_mobile_mfr')

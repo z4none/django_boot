@@ -131,3 +131,4 @@ dmypy.json
 # pycharm
 .idea/
 /django_boot/migrations
+/media

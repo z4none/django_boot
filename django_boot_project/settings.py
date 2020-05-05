@@ -36,6 +36,7 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'demo',
     'django_boot',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -134,6 +135,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # django_boot
 
 DB_NAVBAR_MENU = [
@@ -190,6 +195,10 @@ DB_NAVBAR_MENU = [
 ]
 
 DB_USER_MENU = [
+    {
+        'name': 'profile',
+        'url': reverse_lazy('demo:profile')
+    },
     {
         'name': 'change password',
         'url': reverse_lazy('admin:password_change')

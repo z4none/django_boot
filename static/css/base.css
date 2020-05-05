@@ -449,6 +449,22 @@ fieldset h2 {
 .message-box {
   padding: 0 1.5rem;
 }
+.alert.show {
+  animation: alert-show 0.3s;
+}
+.alert .close {
+  outline: none;
+}
+@keyframes alert-show {
+  0% {
+    opacity: 0;
+    transform: translate(0, -20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0px);
+  }
+}
 #navbar {
   position: fixed;
   left: 0;

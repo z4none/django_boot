@@ -448,6 +448,7 @@ fieldset {
   td.action-checkbox, th.action-checkbox-column {
     width: 40px;
     text-align: center;
+
     input {
       vertical-align: middle;
     }
@@ -472,7 +473,7 @@ fieldset {
   padding: .2rem .6rem;
 }
 
-.select2-container--admin-autocomplete .select2-selection--single{
+.select2-container--admin-autocomplete .select2-selection--single {
   border-radius: 0;
 
   .select2-selection__clear {
@@ -515,6 +516,27 @@ fieldset {
   padding: 0 1.5rem;
 }
 
+.alert {
+  &.show {
+    animation: alert-show .3s;
+  }
+
+  .close {
+    outline: none;
+  }
+}
+
+@keyframes alert-show {
+  0% {
+    opacity: 0;
+    transform: translate(0, -20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0, 0px);
+  }
+}
 
 #navbar {
   position: fixed;
@@ -682,7 +704,6 @@ fieldset {
   color: #333333;
   text-decoration: none;
 }
-
 
 
 #container .breadcrumbs a {

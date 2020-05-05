@@ -1,0 +1,79 @@
+{% load fontawesome_5 %}
+
+{% if widget.is_initial %}
+  <div id="{{ widget.attrs.id }}-image-wrapper">
+    <img id="{{ widget.attrs.id }}-image" src="{{ widget.value.url }}" style="width: 100%;">
+     {% if not widget.required %}
+    <div id="{{ widget.checkbox_id }}-wrapper">
+      <input id="{{ widget.checkbox_id }}" type="checkbox" name="{{ widget.checkbox_name }}">
+      <label for="{{ widget.checkbox_id }}">{{ widget.clear_checkbox_label }}</label>
+    </div>
+    {% endif %}
+    <div style="position: absolute; left: -999px;">
+      <input type="{{ widget.type }}" name="{{ widget.name }}" accept="image/png, image/jpeg" {% include "django/forms/widgets/attrs.html"%}>
+    </div>
+  </div>
+
+
+{% endif %}
+
+<script>
+    $(function () {
+        $("#{{ widget.attrs.id }}-image").click(function(){
+            $("#{{ widget.attrs.id }}").click();
+        });
+
+        $("#{{ widget.attrs.id }}").change(function() {
+            var file = this.files[0];
+            var mime_types = [ 'image/jpeg', 'image/png' ];
+            if(mime_types.indexOf(file.type) == -1) {
+                alert('Error : Incorrect file type');
+                return;
+            }
+
+            if(file.size > 2*1024*1024) {
+                alert('Error : Exceeded size 2MB');
+                return;
+            }
+
+            $("#{{ widget.attrs.id }}-image").attr('src', URL.createObjectURL(file));
+        });
+    })
+</script>
+<style>
+  #{{ widget.attrs.id }}-image-wrapper {
+    position:relative;
+  }
+
+  #{{ widget.attrs.id }}-image-wrapper .clear {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #F00;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    border-radius: 0 0 0 100%;
+    color: #FFF;
+    padding: 4px 0 0 15px;
+  }
+
+  #{{ widget.attrs.id }}-image-wrapper:hover .clear {
+    display: block;
+    opacity: .7;
+  }
+
+  #{{ widget.checkbox_id }}-wrapper {
+    padding: .4rem;
+  }
+
+  #{{ widget.checkbox_id }}-wrapper>*{
+    vertical-align: middle;
+  }
+
+  #{{ widget.checkbox_id }}-wrapper>label{
+    margin: 0;
+  }
+
+</style>
