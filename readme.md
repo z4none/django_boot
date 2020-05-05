@@ -18,3 +18,4 @@
 * ...
 
 ## 截图
+![](https://github.com/z4none/django_boot/blob/master/screenshot/users.png?raw=true)
