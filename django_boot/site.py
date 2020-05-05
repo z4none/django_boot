@@ -9,7 +9,7 @@ from .utils import get_dict, notify
 class AdminSite(admin.AdminSite):
     def test(self, request):
         context = self.each_context(request)
-        context['items'] = get_dict('android_mobile_mfr')
+        context['items'] = get_dict('android_mfr')
         return render(request, "test.html", context)
 
     def test_notification(self, request):
